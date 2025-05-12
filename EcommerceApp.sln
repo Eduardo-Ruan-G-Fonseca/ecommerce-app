@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{94906301-2AF8-48BE-9663-704034A949D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{398F9586-363B-4106-B464-030EA2C8E7F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{BD2CCC9E-659E-492D-9F3A-191CC9A774D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{F5CCBBE0-2F1E-472F-A698-C76D84F777B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ecommerce.Identity.API", "Ecommerce.Identity.API", "{D001831A-EF49-4018-9674-6ACAC5D0C044}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ecommerce.Identity.Application", "Ecommerce.Identity.Application", "{303C1643-914C-4D13-9A52-60BBDADC19B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ecommerce.Identity.Domain", "Ecommerce.Identity.Domain", "{05E97ABA-2AD0-4C85-97E5-6E186D47D96C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ecommerce.Identity.Infrastructure", "Ecommerce.Identity.Infrastructure", "{51B7A079-51AD-475F-BBAB-4AED233E8122}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.Identity.API", "src\Services\Identity\Nova pasta\Ecommerce.Identity.API\Ecommerce.Identity.API.csproj", "{6B16E60E-7ECF-479C-899B-DEA4CDB77DF0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B16E60E-7ECF-479C-899B-DEA4CDB77DF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B16E60E-7ECF-479C-899B-DEA4CDB77DF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B16E60E-7ECF-479C-899B-DEA4CDB77DF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B16E60E-7ECF-479C-899B-DEA4CDB77DF0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{398F9586-363B-4106-B464-030EA2C8E7F6} = {94906301-2AF8-48BE-9663-704034A949D2}
+		{BD2CCC9E-659E-492D-9F3A-191CC9A774D6} = {94906301-2AF8-48BE-9663-704034A949D2}
+		{F5CCBBE0-2F1E-472F-A698-C76D84F777B8} = {BD2CCC9E-659E-492D-9F3A-191CC9A774D6}
+		{D001831A-EF49-4018-9674-6ACAC5D0C044} = {F5CCBBE0-2F1E-472F-A698-C76D84F777B8}
+		{303C1643-914C-4D13-9A52-60BBDADC19B8} = {F5CCBBE0-2F1E-472F-A698-C76D84F777B8}
+		{05E97ABA-2AD0-4C85-97E5-6E186D47D96C} = {F5CCBBE0-2F1E-472F-A698-C76D84F777B8}
+		{51B7A079-51AD-475F-BBAB-4AED233E8122} = {F5CCBBE0-2F1E-472F-A698-C76D84F777B8}
+		{6B16E60E-7ECF-479C-899B-DEA4CDB77DF0} = {D001831A-EF49-4018-9674-6ACAC5D0C044}
+	EndGlobalSection
+EndGlobal
