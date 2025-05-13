@@ -8,11 +8,8 @@ public class Email
 
     public Email(string endereco)
     {
-        if (string.IsNullOrWhiteSpace(endereco))
-            throw new ArgumentException("Email não pode ser vazio.");
-
-        if (!endereco.Contains("@"))
-            throw new ArgumentException("Email inválido.");
+        if (string.IsNullOrWhiteSpace(endereco) || !endereco.Contains("@"))
+            throw new ArgumentException("Email inválido");
 
         Endereco = endereco.Trim().ToLower();
     }

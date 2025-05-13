@@ -10,7 +10,7 @@ public class Usuario
     public Senha Senha { get; private set; }
     public DateTime DataCadastro { get; private set; }
 
-    protected Usuario() { } // para o EF Core
+    protected Usuario() { } // EF Core
 
     public Usuario(string nome, Email email, Senha senha)
     {

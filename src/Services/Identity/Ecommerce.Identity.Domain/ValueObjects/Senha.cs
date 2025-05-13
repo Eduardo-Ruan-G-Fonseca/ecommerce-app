@@ -9,19 +9,19 @@ public class Senha
     public Senha(string senhaPura)
     {
         if (string.IsNullOrWhiteSpace(senhaPura) || senhaPura.Length < 6)
-            throw new ArgumentException("A senha deve conter no mínimo 6 caracteres.");
+            throw new ArgumentException("A senha deve ter no mínimo 6 caracteres.");
 
         ValorHash = Hash(senhaPura);
     }
 
     private string Hash(string input)
     {
-        // Simulação de hash (substitua por BCrypt ou outra lib real depois)
+        // Simulação simples de hash
         return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(input));
     }
 
-    public bool Verificar(string senhaTentativa)
+    public bool Verificar(string tentativa)
     {
-        return Hash(senhaTentativa) == ValorHash;
+        return Hash(tentativa) == ValorHash;
     }
 }
