@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Ecommerce.Core\Ecommerce.Core.csproj" />
     <ProjectReference Include="..\Ecommerce.Identity.Application\Ecommerce.Identity.Application.csproj" />
     <ProjectReference Include="..\Ecommerce.Identity.Infrastructure\Ecommerce.Identity.Infrastructure.csproj" />
   </ItemGroup>

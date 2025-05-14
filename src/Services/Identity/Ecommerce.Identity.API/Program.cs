@@ -1,16 +1,16 @@
-﻿using Ecommerce.Identity.Domain.Repositories;
-using Ecommerce.Identity.Infrastructure.Data;
-using Ecommerce.Identity.Infrastructure.Repositories;
+﻿using Ecommerce.Identity.Infrastructure.Data;
 using Ecommerce.Identity.API.Configurations;
 using Ecommerce.Identity.Application.Services;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Identity;
 
 using MediatR;
 using System.Reflection;
 using System.Text;
+using Ecommerce.Core.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,16 +22,17 @@ builder.Services.AddSwaggerGen();
 // 🔹 Conexão com MySQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<IdentityDbContext>(options =>
+builder.Services.AddDbContext<EcommerceIdentityDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // 🔹 MediatR (busca handlers do projeto Application)
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(Assembly.Load("Ecommerce.Identity.Application")));
 
-// 🔹 Injeção de dependência do domínio
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+// 🔹 Identity
+builder.Services.AddIdentity<UsuarioIdentity, IdentityRole<Guid>>()
+    .AddEntityFrameworkStores<EcommerceIdentityDbContext>()
+    .AddDefaultTokenProviders();
 
 // 🔹 Configurações JWT
 builder.Services.Configure<JwtSettings>(

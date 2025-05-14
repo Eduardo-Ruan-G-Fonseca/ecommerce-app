@@ -6,33 +6,29 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Ecommerce.Identity.Application.Handlers;
 
-public class RegistrarUsuarioCommandHandler : IRequestHandler<RegistrarUsuarioCommand, string?>
+public class LoginUsuarioCommandHandler : IRequestHandler<LoginUsuarioCommand, string?>
 {
     private readonly UserManager<UsuarioIdentity> _userManager;
+    private readonly SignInManager<UsuarioIdentity> _signInManager;
     private readonly TokenService _tokenService;
 
-    public RegistrarUsuarioCommandHandler(
+    public LoginUsuarioCommandHandler(
         UserManager<UsuarioIdentity> userManager,
+        SignInManager<UsuarioIdentity> signInManager,
         TokenService tokenService)
     {
         _userManager = userManager;
+        _signInManager = signInManager;
         _tokenService = tokenService;
     }
 
-    public async Task<string?> Handle(RegistrarUsuarioCommand request, CancellationToken cancellationToken)
+    public async Task<string?> Handle(LoginUsuarioCommand request, CancellationToken cancellationToken)
     {
-        var existente = await _userManager.FindByEmailAsync(request.Email);
-        if (existente != null)
+        var usuario = await _userManager.FindByEmailAsync(request.Email);
+        if (usuario == null)
             return null;
 
-        var usuario = new UsuarioIdentity
-        {
-            UserName = request.Email,
-            Email = request.Email,
-            Nome = request.Nome
-        };
-
-        var resultado = await _userManager.CreateAsync(usuario, request.Senha);
+        var resultado = await _signInManager.CheckPasswordSignInAsync(usuario, request.Senha, false);
         if (!resultado.Succeeded)
             return null;
 

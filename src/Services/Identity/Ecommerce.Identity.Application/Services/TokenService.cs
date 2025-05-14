@@ -1,9 +1,8 @@
-﻿using Ecommerce.Identity.Domain.Entities;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-
+using Ecommerce.Core.Identity;
 
 namespace Ecommerce.Identity.Application.Services;
 
@@ -22,14 +21,14 @@ public class TokenService
         _expireHours = expireHours;
     }
 
-    public string GerarToken(Usuario usuario)
+    public string GerarToken(UsuarioIdentity usuario)
     {
         var key = Encoding.ASCII.GetBytes(_secret);
 
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Sub, usuario.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, usuario.Email.Endereco),
+            new Claim(JwtRegisteredClaimNames.Email, usuario.Email ?? ""),
             new Claim("nome", usuario.Nome)
         };
 

@@ -18,13 +18,19 @@ public class UsuariosController : ControllerBase
     [HttpPost("registrar")]
     public async Task<IActionResult> Registrar([FromBody] RegistrarUsuarioCommand command)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
         var token = await _mediator.Send(command);
-
         if (token == null)
-            return Conflict("Já existe um usuário com este e-mail.");
+            return Conflict("Usuário já existe ou falha ao registrar.");
+
+        return Ok(new { token });
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginUsuarioCommand command)
+    {
+        var token = await _mediator.Send(command);
+        if (token == null)
+            return Unauthorized("Credenciais inválidas.");
 
         return Ok(new { token });
     }
