@@ -1,47 +1,48 @@
 ﻿using Ecommerce.Identity.Infrastructure.Data;
-using Ecommerce.Identity.API.Configurations;
 using Ecommerce.Identity.Application.Services;
+using Ecommerce.Core.Identity;
+using Ecommerce.Auth;
 
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 using MediatR;
 using System.Reflection;
 using System.Text;
-using Ecommerce.Core.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔹 Controllers e Swagger
+// Controllers e Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// 🔹 Conexão com MySQL
+// Conexão com MySQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
 builder.Services.AddDbContext<EcommerceIdentityDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-// 🔹 MediatR (busca handlers do projeto Application)
+// MediatR
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(Assembly.Load("Ecommerce.Identity.Application")));
 
-// 🔹 Identity
+// Identity
 builder.Services.AddIdentity<UsuarioIdentity, IdentityRole<Guid>>()
     .AddEntityFrameworkStores<EcommerceIdentityDbContext>()
     .AddDefaultTokenProviders();
 
-// 🔹 Configurações JWT
+// JWT Settings
 builder.Services.Configure<JwtSettings>(
     builder.Configuration.GetSection("Jwt"));
 
-var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
+var jwtSettings = builder.Configuration
+    .GetSection("Jwt")
+    .Get<JwtSettings>();
+
 var key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
 
-// 🔹 TokenService com dados do appsettings
 builder.Services.AddSingleton(new TokenService(
     jwtSettings.Secret,
     jwtSettings.Issuer,
@@ -49,7 +50,7 @@ builder.Services.AddSingleton(new TokenService(
     jwtSettings.ExpireHours
 ));
 
-// 🔹 Configuração do JWT Bearer
+// Autenticação com JWT
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -57,7 +58,7 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
-    options.RequireHttpsMetadata = false; // true em produção
+    options.RequireHttpsMetadata = false;
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -65,16 +66,16 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-
         ValidIssuer = jwtSettings.Issuer,
         ValidAudience = jwtSettings.Audience,
         IssuerSigningKey = new SymmetricSecurityKey(key)
     };
 });
 
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
-// 🔹 Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -85,5 +86,4 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();
