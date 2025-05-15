@@ -21,7 +21,6 @@ Sistema de e-commerce real baseado em microserviços com ASP.NET Core 8 e React,
 ## 🧱 Estrutura atual de microserviços
 
 <pre> ### 🧱 Estrutura atual de microserviços ``` ├── Services/ │ ├── Catalog/ │ │ ├── Ecommerce.Catalog.API │ │ ├── Ecommerce.Catalog.Application │ │ ├── Ecommerce.Catalog.Domain │ │ └── Ecommerce.Catalog.Infrastructure │ ├── Customers/ │ │ ├── Ecommerce.Customers.API │ │ ├── Ecommerce.Customers.Application │ │ ├── Ecommerce.Customers.Domain │ │ └── Ecommerce.Customers.Infrastructure │ ├── Identity/ │ │ └── Ecommerce.Identity.API │ ├── Cart/ │ │ ├── Ecommerce.Cart.API │ │ ├── Ecommerce.Cart.Application │ │ ├── Ecommerce.Cart.Domain │ │ └── Ecommerce.Cart.Infrastructure ├── BuildingBlocks/ │ ├── Ecommerce.Auth │ └── (outros em breve) ``` </pre>
-
 ---
 
 ## ✅ Funcionalidades implementadas até agora
