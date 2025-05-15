@@ -1,7 +1,7 @@
 ﻿using Ecommerce.Auth;
-using Ecommerce.Catalog.Domain.Repositories;
-using Ecommerce.Catalog.Infrastructure.Data;
-using Ecommerce.Catalog.Infrastructure.Repositories;
+using Ecommerce.Cart.Domain.Repositories;
+using Ecommerce.Cart.Infrastructure.Data;
+using Ecommerce.Cart.Infrastructure.Repositories;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -21,11 +21,11 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Ecommerce Catalog API",
+        Title = "Ecommerce Cart API",
         Version = "v1"
     });
 
-    // 🔐 Configuração do botão "Authorize" com Bearer
+    // 🔐 Configuração do botão "Authorize"
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = @"JWT Authorization header usando o esquema Bearer. 
@@ -55,7 +55,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// 🔹 Configurações JWT (centralizadas via Ecommerce.Auth)
+// 🔐 JWT (centralizado via Ecommerce.Auth)
 builder.Services.Configure<JwtSettings>(
     builder.Configuration.GetSection("Jwt"));
 
@@ -79,18 +79,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-// 🔹 Conexão com MySQL
+// 🔹 Banco de dados
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<CatalogoDbContext>(options =>
+builder.Services.AddDbContext<CarrinhoDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // 🔹 MediatR
 builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(Assembly.Load("Ecommerce.Catalog.Application")));
+    cfg.RegisterServicesFromAssembly(Assembly.Load("Ecommerce.Cart.Application")));
 
-// 🔹 Injeção de dependência dos repositórios
-builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
-builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+// 🔹 Repositórios
+builder.Services.AddScoped<ICarrinhoRepository, CarrinhoRepository>();
 
 var app = builder.Build();
 
